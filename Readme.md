@@ -1,14 +1,9 @@
-#Programming languages project, Pharmacy and Warehouse Department, Damascus University
+# Programming languages project, Pharmacy and Warehouse Department, Damascus University
 
-##backend
+## backend
 
+```we will use laravel framework```
 
+## frontend
 
-we will use laravel framework
-
-
-
-##frontend
-
-
-we wiil use flutter framework
+```we wiil use flutter framework```

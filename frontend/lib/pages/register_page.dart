@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:login_page/widgets/custom_button.dart';
-import 'package:login_page/widgets/custom_text_field.dart';
+import 'package:frontend/widgets/custom_button.dart';
+import 'package:frontend/widgets/custom_text_field.dart';
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({super.key});

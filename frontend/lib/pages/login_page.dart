@@ -4,12 +4,15 @@ import 'package:frontend/widgets/custom_button.dart';
 import 'package:frontend/widgets/custom_text_field.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+  LoginPage({super.key});
+
+  final TextEditingController? _emailController = TextEditingController();
+  final TextEditingController? _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue,
+      backgroundColor: Color.fromARGB(255, 227, 247, 247),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8),
         child: Column(
@@ -30,7 +33,7 @@ class LoginPage extends StatelessWidget {
               'Pharmacy App',
               style: TextStyle(
                 fontSize: 32,
-                color: Colors.white,
+                color: Color(0xff17A4A1),
                 fontFamily: 'Pacifico',
               ),
             ),
@@ -43,7 +46,7 @@ class LoginPage extends StatelessWidget {
                   'LOGIN',
                   style: TextStyle(
                     fontSize: 24,
-                    color: Colors.white,
+                    color: Color(0xff17A4A1),
                   ),
                 ),
               ],
@@ -53,12 +56,16 @@ class LoginPage extends StatelessWidget {
             ),
             CustomTextField(
               hintText: 'Email',
+              controller: _emailController,
+              obscureText: false,
             ),
             SizedBox(
               height: 10,
             ),
             CustomTextField(
               hintText: 'Password',
+              controller: _passwordController,
+              obscureText: true,
             ),
             SizedBox(
               height: 20,
@@ -73,7 +80,7 @@ class LoginPage extends StatelessWidget {
                 Text(
                   'dont\'t have an account?',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Color(0xff17A4A1),
                   ),
                 ),
                 GestureDetector(
@@ -90,7 +97,7 @@ class LoginPage extends StatelessWidget {
                   child: Text(
                     ' Register',
                     style: TextStyle(
-                      color: Color(0XffC7EDE6),
+                      color: Colors.black,
                     ),
                   ),
                 ),

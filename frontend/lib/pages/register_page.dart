@@ -3,12 +3,15 @@ import 'package:frontend/widgets/custom_button.dart';
 import 'package:frontend/widgets/custom_text_field.dart';
 
 class RegisterPage extends StatelessWidget {
-  const RegisterPage({super.key});
+  RegisterPage({super.key});
+
+  final TextEditingController? _emailController = TextEditingController();
+  final TextEditingController? _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue,
+      backgroundColor: Color.fromARGB(255, 227, 247, 247),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8),
         child: Column(
@@ -29,7 +32,7 @@ class RegisterPage extends StatelessWidget {
               'Pharmacy App',
               style: TextStyle(
                 fontSize: 32,
-                color: Colors.white,
+                color: Color(0xff17A4A1),
                 fontFamily: 'Pacifico',
               ),
             ),
@@ -42,7 +45,7 @@ class RegisterPage extends StatelessWidget {
                   'Register',
                   style: TextStyle(
                     fontSize: 24,
-                    color: Colors.white,
+                    color: Color(0xff17A4A1),
                   ),
                 ),
               ],
@@ -52,12 +55,16 @@ class RegisterPage extends StatelessWidget {
             ),
             CustomTextField(
               hintText: 'Email',
+              controller: _emailController,
+              obscureText: false,
             ),
             SizedBox(
               height: 10,
             ),
             CustomTextField(
               hintText: 'Password',
+              controller: _passwordController,
+              obscureText: true,
             ),
             SizedBox(
               height: 20,
@@ -74,13 +81,13 @@ class RegisterPage extends StatelessWidget {
                 Text(
                   'already have an account?',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Color(0xff17A4A1),
                   ),
                 ),
                 Text(
                   ' Login',
                   style: TextStyle(
-                    color: Color(0XffC7EDE6),
+                    color: Colors.black,
                   ),
                 ),
               ],

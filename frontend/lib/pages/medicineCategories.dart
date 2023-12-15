@@ -24,21 +24,15 @@ class MedicineCategory extends StatelessWidget {
               ),
               Column(
                 children: [
-                  Container(
-                    width: 200,
-                    height: 200,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                        image:
-                            AssetImage('assets/photo_2023-12-04_12-24-38.jpg'),
-                      ),
-                    ),
+                  CircleAvatar(
+                    radius: 100,
+                    backgroundImage:
+                        AssetImage('assets/photo_2023-12-15_18-32-05.jpg'),
                   ),
                   SizedBox(
                       height: 10), // Add some space between the image and text
                   Text(
-                    'Your Text Here',
+                    'Vitamens',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -51,21 +45,15 @@ class MedicineCategory extends StatelessWidget {
               ),
               Column(
                 children: [
-                  Container(
-                    width: 200,
-                    height: 200,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                        image:
-                            AssetImage('assets/photo_2023-12-04_12-24-38.jpg'),
-                      ),
-                    ),
+                  CircleAvatar(
+                    radius: 100,
+                    backgroundImage:
+                        AssetImage('assets/photo_2023-12-15_17-46-46.jpg'),
                   ),
                   SizedBox(
                       height: 10), // Add some space between the image and text
                   Text(
-                    'Your Text Here',
+                    'Heart Medications',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -89,21 +77,15 @@ class MedicineCategory extends StatelessWidget {
               ),
               Column(
                 children: [
-                  Container(
-                    width: 200,
-                    height: 200,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                        image:
-                            AssetImage('assets/photo_2023-12-04_12-24-38.jpg'),
-                      ),
-                    ),
+                  CircleAvatar(
+                    radius: 100,
+                    backgroundImage:
+                        AssetImage('assets/photo_2023-12-15_17-25-40.jpg'),
                   ),
                   SizedBox(
                       height: 10), // Add some space between the image and text
                   Text(
-                    'Your Text Here',
+                    'Neurological Medications',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -116,21 +98,16 @@ class MedicineCategory extends StatelessWidget {
               ),
               Column(
                 children: [
-                  Container(
-                    width: 200,
-                    height: 200,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                        image:
-                            AssetImage('assets/photo_2023-12-04_12-24-38.jpg'),
-                      ),
-                    ),
+                  CircleAvatar(
+                    radius: 100,
+                    backgroundImage:
+                        AssetImage('assets/photo_2023-12-15_18-32-10.jpg'),
                   ),
+
                   SizedBox(
                       height: 10), // Add some space between the image and text
                   Text(
-                    'Your Text Here',
+                    'PainKillers',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,

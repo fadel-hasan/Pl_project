@@ -70,7 +70,11 @@ class LoginPage extends StatelessWidget {
             SizedBox(
               height: 20,
             ),
-            CustomButton(text: 'LOGIN'),
+            GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, 'MedicineCategory');
+                },
+                child: CustomButton(text: 'LOGIN')),
             SizedBox(
               height: 10,
             ),
@@ -85,14 +89,7 @@ class LoginPage extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return RegisterPage();
-                        },
-                      ),
-                    );
+                    Navigator.pushNamed(context, 'RegisterPage');
                   },
                   child: Text(
                     ' Register',

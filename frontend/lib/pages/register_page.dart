@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/pages/login_page.dart';
 import 'package:frontend/widgets/custom_button.dart';
 import 'package:frontend/widgets/custom_text_field.dart';
 
@@ -7,6 +8,8 @@ class RegisterPage extends StatelessWidget {
 
   final TextEditingController? _emailController = TextEditingController();
   final TextEditingController? _passwordController = TextEditingController();
+  final TextEditingController? _ConfirmPasswordController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -62,8 +65,16 @@ class RegisterPage extends StatelessWidget {
               height: 10,
             ),
             CustomTextField(
-              hintText: 'Password',
+              hintText: 'Enter Password',
               controller: _passwordController,
+              obscureText: true,
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            CustomTextField(
+              hintText: 'Confirm Password',
+              controller: _ConfirmPasswordController,
               obscureText: true,
             ),
             SizedBox(
@@ -84,10 +95,15 @@ class RegisterPage extends StatelessWidget {
                     color: Color(0xff17A4A1),
                   ),
                 ),
-                Text(
-                  ' Login',
-                  style: TextStyle(
-                    color: Colors.black,
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text(
+                    ' Login',
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
                   ),
                 ),
               ],

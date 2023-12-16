@@ -72,9 +72,13 @@ class LoginPage extends StatelessWidget {
             ),
             GestureDetector(
                 onTap: () {
-                  Navigator.pushNamed(context, 'MedicineCategory');
+                  Navigator.pushNamed(context, 'Medicine');
                 },
-                child: CustomButton(text: 'LOGIN')),
+                child: CustomButton(
+                  text: 'LOGIN',
+                  width: double.infinity,
+                  height: 60,
+                )),
             SizedBox(
               height: 10,
             ),

@@ -82,6 +82,8 @@ class RegisterPage extends StatelessWidget {
             ),
             CustomButton(
               text: 'REGISTER',
+              width: double.infinity,
+              height: 60,
             ),
             SizedBox(
               height: 10,

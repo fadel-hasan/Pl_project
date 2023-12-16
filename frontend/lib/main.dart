@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/pages/login_page.dart';
-import 'package:frontend/pages/medicineCategories.dart';
+import 'package:frontend/pages/medicine_page.dart';
 import 'package:frontend/pages/register_page.dart';
 
 void main() {
@@ -18,7 +18,7 @@ class PharmacyApp extends StatelessWidget {
       routes: {
         'LoginPage': (context) => LoginPage(),
         'RegisterPage': (context) => RegisterPage(),
-        'MedicineCategory': (context) => MedicineCategory()
+        'Medicine': (context) => Medicine()
       },
       initialRoute: 'LoginPage',
     );

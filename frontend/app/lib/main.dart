@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/pages/login_page.dart';
-import 'package:frontend/pages/medicine.dart';
+import 'package:frontend/pages/medicine_list.dart';
 import 'package:frontend/pages/register_page.dart';
+import 'package:frontend/pages/settingsScreen.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(PharmacyApp());
@@ -12,15 +14,25 @@ class PharmacyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(primaryColor: Colors.purple),
-      debugShowCheckedModeBanner: false,
-      routes: {
-        'LoginPage': (context) => LoginPage(),
-        'RegisterPage': (context) => RegisterPage(),
-        'Medicine': (context) => medicine()
-      },
-      initialRoute: 'LoginPage',
+    return ChangeNotifierProvider(
+      create: (context) => ThemeProvider(),
+      child: Consumer<ThemeProvider>(
+        builder: (context, themeProvider, child) {
+          return MaterialApp(
+            theme: themeProvider.isDarkModeEnabled
+                ? ThemeData.dark()
+                : ThemeData.light(),
+            debugShowCheckedModeBanner: false,
+            routes: {
+              'LoginPage': (context) => LoginPage(),
+              'RegisterPage': (context) => RegisterPage(),
+              'Medicine': (context) => MedicineListPage(),
+              'SettingsScreen': (context) => SettingsScreen(),
+            },
+            initialRoute: 'LoginPage',
+          );
+        },
+      ),
     );
   }
 }

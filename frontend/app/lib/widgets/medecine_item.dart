@@ -33,132 +33,61 @@ class MedicineItem extends StatelessWidget {
         border: Border.all(color: Colors.grey),
         borderRadius: BorderRadius.circular(8),
       ),
-      padding: EdgeInsets.all(16),
+      padding: EdgeInsets.all(8),
       child: Row(
         children: [
           Column(
             children: [
-              Text(
-                'Sientific Name:',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xff17A4A1),
-                ),
-              ),
-              SizedBox(height: 8),
-              Text(
-                'Medecine Name:',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xff17A4A1),
-                ),
-              ),
-              SizedBox(height: 8),
-              Text(
-                'Medicine Category:',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xff17A4A1),
-                ),
-              ),
-              SizedBox(height: 8),
-              Text(
-                'Manufacture Company:',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xff17A4A1),
-                ),
-              ),
-              SizedBox(height: 8),
-              Text(
-                'Quantity:',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xff17A4A1),
-                ),
-              ),
-              SizedBox(height: 8),
-              Text(
-                'Expiration Date:',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xff17A4A1),
-                ),
-              ),
-              SizedBox(height: 8),
-              Text(
-                'Price:',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xff17A4A1),
-                ),
-              ),
+              buildText('Scientific Name:', sientificName),
+              buildText('Medicine Name:', medicineName),
+              buildText('Medicine Category:', medicineCategories),
+              buildText('Manufacture Company:', manufactureCompany),
+              buildText('Quantity:', quantity),
+              buildText('Expiration Date:', expirationDate),
+              buildText('Price:', price),
             ],
           ),
           Spacer(
-            flex: 1,
+            flex: 3,
           ),
           Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                medicineName,
-                style: TextStyle(fontSize: 16, color: Color(0xff17A4A1)),
+              ElevatedButton(
+                onPressed: onPressed,
+                child: Text(text),
+                style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(0),
+                    ),
+                    backgroundColor: Color(0xff1DC2D6),
+                    maximumSize: Size(150, 60)),
               ),
-              SizedBox(height: 8),
-              Text(
-                sientificName,
-                style: TextStyle(fontSize: 16, color: Color(0xff17A4A1)),
-              ),
-              SizedBox(height: 8),
-              Text(
-                medicineCategories,
-                style: TextStyle(fontSize: 16, color: Color(0xff17A4A1)),
-              ),
-              SizedBox(height: 8),
-              Text(
-                manufactureCompany,
-                style: TextStyle(fontSize: 16, color: Color(0xff17A4A1)),
-              ),
-              SizedBox(height: 8),
-              Text(
-                quantity,
-                style: TextStyle(fontSize: 16, color: Color(0xff17A4A1)),
-              ),
-              SizedBox(height: 8),
-              Text(expirationDate,
-                  style: TextStyle(fontSize: 16, color: Color(0xff17A4A1))),
-              SizedBox(height: 8),
-              Text(price,
-                  style: TextStyle(fontSize: 16, color: Color(0xff17A4A1))),
             ],
           ),
-          Spacer(flex: 10),
-          ElevatedButton(
-            onPressed: onPressed,
-            child: Text(text),
-            style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(0),
-                ),
-                backgroundColor: Color(0xff1DC2D6),
-                maximumSize: Size(150, 60)),
-          ),
-          Spacer(
-            flex: 1,
-          ),
-          Image.asset(imagePath,
-              width: 100, height: 100), // This is the image widget
-          SizedBox(width: 16),
         ],
       ),
     );
   }
+}
+
+Widget buildText(String label, String value) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(
+        label,
+        style: TextStyle(
+          fontSize: 12,
+          fontWeight: FontWeight.bold,
+          color: Color(0xff17A4A1),
+        ),
+      ),
+      SizedBox(height: 2),
+      Text(
+        value,
+        style: TextStyle(fontSize: 12, color: Color(0xff17A4A1)),
+      ),
+      SizedBox(height: 2),
+    ],
+  );
 }

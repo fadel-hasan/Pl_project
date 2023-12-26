@@ -1,13 +1,63 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/widgets/custom_button.dart';
-import 'package:frontend/widgets/custom_text_field.dart';
+import 'package:frontend/Components/custom_text_field.dart';
+import 'package:frontend/models/token_model.dart';
+import 'package:frontend/pages/medicine_list.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   LoginPage({super.key});
 
-  final TextEditingController? _emailController = TextEditingController();
-  final TextEditingController? _passwordController = TextEditingController();
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final TextEditingController email = TextEditingController();
+
+  final TextEditingController password = TextEditingController();
+
   GlobalKey<FormState> formKey = GlobalKey();
+
+  Future<void> login(
+      BuildContext context, String email, String password) async {
+    Map<String, String> requestBody = {
+      'email': email,
+      'password': password,
+    };
+    try {
+      String? regToken = await UserPreferences.getRegisterToken();
+      var response = await http.post(
+        Uri.parse('http://192.168.1.104:8000/api/login'),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $regToken'
+        },
+        body: jsonEncode(requestBody),
+      );
+
+      print("Login status code: ${response.statusCode}");
+
+      if (response.statusCode == 200) {
+        var jsonData = jsonDecode(response.body);
+        String loginToken = jsonData['data']['token'];
+
+        // Save the token to shared preferences
+        await UserPreferences.saveLoginToken(loginToken);
+        print('Login successful. login token is saved: $loginToken');
+        print('your saved registeration token is $regToken');
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => MedicineListPage()),
+        );
+      } else {
+        throw Exception('Failed to log in');
+      }
+    } catch (e) {
+      print('Exception occurred during login: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,7 +66,7 @@ class LoginPage extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 8),
         child: Form(
           key: formKey,
-          child: Column(
+          child: ListView(
             children: [
               Spacer(
                 flex: 2,
@@ -30,12 +80,14 @@ class LoginPage extends StatelessWidget {
                       AssetImage('assets/photo_2023-12-04_12-24-38.jpg'),
                 ),
               ),
-              Text(
-                'Pharmacy App',
-                style: TextStyle(
-                  fontSize: 32,
-                  color: Color(0xff17A4A1),
-                  fontFamily: 'Pacifico',
+              Center(
+                child: Text(
+                  'Pharmacy App',
+                  style: TextStyle(
+                    fontSize: 32,
+                    color: Color(0xff17A4A1),
+                    fontFamily: 'Pacifico',
+                  ),
                 ),
               ),
               Spacer(
@@ -57,7 +109,7 @@ class LoginPage extends StatelessWidget {
               ),
               CustomTextField(
                 hintText: 'Email',
-                controller: _emailController,
+                controller: email,
                 obscureText: false,
               ),
               SizedBox(
@@ -65,7 +117,7 @@ class LoginPage extends StatelessWidget {
               ),
               CustomTextField(
                 hintText: 'Password',
-                controller: _passwordController,
+                controller: password,
                 obscureText: true,
               ),
               SizedBox(
@@ -74,7 +126,7 @@ class LoginPage extends StatelessWidget {
               ElevatedButton(
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
-                      Navigator.pushNamed(context, 'Medicine');
+                      login(context, email.text, password.text);
                     } else {
                       print("Not Validated");
                     }

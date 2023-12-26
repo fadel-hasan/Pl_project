@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/widgets/medecine_item.dart';
+import 'package:frontend/Components/medecine_item.dart';
 
 class MedicineDetailsPage extends StatefulWidget {
   const MedicineDetailsPage({super.key});
@@ -33,7 +33,7 @@ class _MedicineDetailsPageState extends State<MedicineDetailsPage> {
           quantity: '$items1',
           expirationDate: '',
           price: '',
-          imagePath: '',
+          imagePath: 'assets/photo_2023-12-16_16-31-43.jpg',
           onPressed: () {
             setState(() {
               items1--;

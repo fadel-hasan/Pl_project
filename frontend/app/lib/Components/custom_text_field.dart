@@ -11,7 +11,7 @@ class CustomTextField extends StatelessWidget {
     return TextFormField(
       validator: (value) {
         if (value!.length < 8) {
-          return "* Input should be atleast 6 characters";
+          return "* Input should be atleast 8 characters";
         } else
           return null;
       },

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/pages/login_page.dart';
+import 'package:frontend/pages/logout_page.dart';
 import 'package:frontend/pages/medicine_list.dart';
 import 'package:frontend/pages/register_page.dart';
 import 'package:frontend/pages/settingsScreen.dart';
 import 'package:provider/provider.dart';
+import 'package:frontend/my_drawer_header.dart';
 
 void main() {
   runApp(PharmacyApp());
@@ -28,6 +30,8 @@ class PharmacyApp extends StatelessWidget {
               'RegisterPage': (context) => RegisterPage(),
               'Medicine': (context) => MedicineListPage(),
               'SettingsScreen': (context) => SettingsScreen(),
+              'MyDrawerHeader': (context) => MyHeaderDrawer(),
+              'log out': (context) => LogOut(),
             },
             initialRoute: 'LoginPage',
           );

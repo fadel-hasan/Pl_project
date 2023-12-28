@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/order_provider.dart';
+import 'package:frontend/pages/OrderedItemsPage.dart';
 import 'package:frontend/pages/login_page.dart';
 import 'package:frontend/pages/logout_page.dart';
 import 'package:frontend/pages/medicine_list.dart';
@@ -8,7 +10,12 @@ import 'package:provider/provider.dart';
 import 'package:frontend/my_drawer_header.dart';
 
 void main() {
-  runApp(PharmacyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => OrderProvider(),
+      child: PharmacyApp(),
+    ),
+  );
 }
 
 class PharmacyApp extends StatelessWidget {
@@ -32,6 +39,7 @@ class PharmacyApp extends StatelessWidget {
               'SettingsScreen': (context) => SettingsScreen(),
               'MyDrawerHeader': (context) => MyHeaderDrawer(),
               'log out': (context) => LogOut(),
+              'Ordered Items': (context) => OrderedItemsPage()
             },
             initialRoute: 'LoginPage',
           );

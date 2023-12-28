@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/Components/medecine_item.dart';
-import 'package:frontend/order_provider.dart';
-import 'package:frontend/pages/OrderedItemsPage.dart';
-import 'package:provider/provider.dart';
+import 'package:project/widgets/medicine_item.dart';
 
 class MedicineDetailsPage extends StatefulWidget {
   final String medicineName;
   final String medicineCategory;
   final String medicineImage;
-
   const MedicineDetailsPage({
     Key? key,
     required this.medicineName,
@@ -27,6 +23,8 @@ class _MedicineDetailsPageState extends State<MedicineDetailsPage> {
     'Digestive Health',
   ];
   int items1 = 50;
+  int items2 = 50;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,30 +35,15 @@ class _MedicineDetailsPageState extends State<MedicineDetailsPage> {
       ),
       body: ListView(padding: EdgeInsets.all(16), children: [
         MedicineItem(
-          medicineName: widget.medicineName,
+          medicineName: '',
           sientificName: '',
           medicineCategories: '',
           manufactureCompany: '',
           quantity: '$items1',
           expirationDate: '',
           price: '',
-          imagePath: 'assets/photo_2023-12-16_16-31-43.jpg',
+          imagePath: '',
           onPressed: () {
-            String itemName =
-                widget.medicineName; // Use widget.medicineName here
-            int orderedQuantity = 50 - items1;
-
-            Order order = Order(itemName: itemName, quantity: orderedQuantity);
-
-            final orderProvider =
-                Provider.of<OrderProvider>(context, listen: false);
-            orderProvider.addOrder(order);
-
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => OrderedItemsPage()),
-            );
-
             setState(() {
               items1--;
             });

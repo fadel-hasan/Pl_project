@@ -8,23 +8,20 @@ class MedicineItem extends StatelessWidget {
   final String quantity;
   final String expirationDate;
   final String price;
-  String medicineCategories;
-
   final VoidCallback? onPressed;
   final String text;
-
-  MedicineItem({
-    required this.imagePath,
-    required this.medicineName,
-    required this.sientificName,
-    required this.medicineCategories,
-    required this.manufactureCompany,
-    required this.quantity,
-    required this.expirationDate,
-    required this.price,
-    required this.onPressed,
-    required this.text,
-  });
+  String medicineCategories;
+  MedicineItem(
+      {required this.imagePath,
+      required this.medicineName,
+      required this.sientificName,
+      required this.manufactureCompany,
+      required this.quantity,
+      required this.expirationDate,
+      required this.price,
+      required this.onPressed,
+      required this.text,
+      required this.medicineCategories});
 
   @override
   Widget build(BuildContext context) {

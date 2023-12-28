@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/pages/logout_page.dart';
-import 'package:frontend/pages/OrderedItemsPage.dart';
-import 'package:frontend/pages/medicine_details_page.dart';
-import 'package:frontend/pages/settingsScreen.dart';
-import 'package:frontend/my_drawer_header.dart';
-import 'package:frontend/pages/notificationPage.dart';
+import 'package:project/pages/logout_page.dart';
+
+import 'package:project/pages/medicine_details_page.dart';
+
+import 'package:project/my_drawer_header.dart';
+import 'package:project/pages/notificationPage.dart';
 
 class MedicineListPage extends StatelessWidget {
   final List<String> medicineNames = [
@@ -204,13 +204,6 @@ class MyDrawerList extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => NotificationsPage()),
-            );
-          }),
-          menuItem("Ordered Items", () {
-            // Navigate to Notifications page
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => OrderedItemsPage()),
             );
           }),
           menuItem("Log Out", () {

@@ -25,9 +25,28 @@ class _OrderedItemsPageState extends State<OrderedItemsPage> {
           return ListView.builder(
             itemCount: orders.length,
             itemBuilder: (context, index) {
+              String status =
+                  orders[index].status; // Get the status of the order
+              IconData statusIcon = Icons.check_circle; // Default status icon
+
+              if (status == 'In Preparation') {
+                statusIcon =
+                    Icons.access_time; // Icon for "In Preparation" status
+              } else if (status == 'Sent') {
+                statusIcon = Icons.send; // Icon for "Sent" status
+              } else if (status == 'Received') {
+                statusIcon = Icons.done; // Icon for "Received" status
+              }
+
               return ListTile(
                 title: Text('Item: ${orders[index].itemName}'),
-                subtitle: Text('Quantity: ${orders[index].quantity}'),
+                subtitle: Row(
+                  children: [
+                    Text('Quantity: ${orders[index].quantity}'),
+                    SizedBox(width: 8),
+                    Icon(statusIcon), // Display the status icon
+                  ],
+                ),
               );
             },
           );
@@ -38,6 +57,7 @@ class _OrderedItemsPageState extends State<OrderedItemsPage> {
 class Order {
   final String itemName;
   final int quantity;
+  String status;
 
-  Order({required this.itemName, required this.quantity});
+  Order({required this.itemName, required this.quantity, required this.status});
 }

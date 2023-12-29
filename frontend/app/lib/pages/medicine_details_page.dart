@@ -49,8 +49,13 @@ class _MedicineDetailsPageState extends State<MedicineDetailsPage> {
             String itemName =
                 widget.medicineName; // Use widget.medicineName here
             int orderedQuantity = 50 - items1;
+            String status = 'In Preparation';
 
-            Order order = Order(itemName: itemName, quantity: orderedQuantity);
+            Order order = Order(
+              itemName: itemName,
+              quantity: orderedQuantity,
+              status: status,
+            );
 
             final orderProvider =
                 Provider.of<OrderProvider>(context, listen: false);

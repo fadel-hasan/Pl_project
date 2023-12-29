@@ -9,3 +9,19 @@ class OrderProvider with ChangeNotifier {
     notifyListeners();
   }
 }
+
+class FavoritesProvider extends ChangeNotifier {
+  List<String> _favoriteMedicines = [];
+
+  List<String> get favoriteMedicines => _favoriteMedicines;
+
+  void addToFavorites(String medicineName) {
+    _favoriteMedicines.add(medicineName);
+    notifyListeners();
+  }
+
+  void removeFromFavorites(String medicineName) {
+    _favoriteMedicines.remove(medicineName);
+    notifyListeners();
+  }
+}

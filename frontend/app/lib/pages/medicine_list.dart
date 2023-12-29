@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/order_provider.dart';
+import 'package:frontend/pages/FavoritesPage.dart';
 import 'package:frontend/pages/logout_page.dart';
 import 'package:frontend/pages/OrderedItemsPage.dart';
 import 'package:frontend/pages/medicine_details_page.dart';
-import 'package:frontend/pages/settingsScreen.dart';
 import 'package:frontend/my_drawer_header.dart';
-import 'package:frontend/pages/notificationPage.dart';
+import 'package:provider/provider.dart';
 
 class MedicineListPage extends StatelessWidget {
   final List<String> medicineNames = [
@@ -20,10 +21,10 @@ class MedicineListPage extends StatelessWidget {
     'Digestive Health'
   ];
   final List<String> medicineImages = [
-    'assets/images.jpg',
-    'assets/images (2).jpg',
-    'assets/download.jpg',
-    'assets/a38891.jpg'
+    'assets/photo_2023-12-26_12-21-33.jpg',
+    'assets/photo_2023-12-26_12-21-37.jpg',
+    'assets/photo_2023-12-26_12-21-44.jpg',
+    'assets/photo_2023-12-26_12-21-49.jpg',
   ];
 
   @override
@@ -31,6 +32,8 @@ class MedicineListPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 227, 247, 247),
       appBar: AppBar(
+        backgroundColor: Color(0xff17A4A1),
+        title: Text('Available Medicine'),
         actions: [
           IconButton(
             onPressed: () {
@@ -57,7 +60,27 @@ class MedicineListPage extends StatelessWidget {
               ),
               title: Text(medicineNames[index]),
               subtitle: Text(medicineCategories[index]),
-              trailing: const Icon(Icons.arrow_forward),
+              trailing: IconButton(
+                icon: Icon(
+                  Provider.of<FavoritesProvider>(context)
+                          .favoriteMedicines
+                          .contains(medicineNames[index])
+                      ? Icons.favorite
+                      : Icons.favorite_border,
+                  color: Colors.red,
+                ),
+                onPressed: () {
+                  var favoritesProvider =
+                      Provider.of<FavoritesProvider>(context, listen: false);
+
+                  if (favoritesProvider.favoriteMedicines
+                      .contains(medicineNames[index])) {
+                    favoritesProvider.removeFromFavorites(medicineNames[index]);
+                  } else {
+                    favoritesProvider.addToFavorites(medicineNames[index]);
+                  }
+                },
+              ),
               onTap: () {
                 _navigateToMedicineDetailsPage(context, medicineNames[index],
                     medicineCategories[index], medicineImages[index]);
@@ -99,6 +122,7 @@ class MedicineListPage extends StatelessWidget {
 class MySearchDelegate extends SearchDelegate {
   final List<String>? medicineNames;
   final List<String>? medicineCategories;
+  TextEditingController searchController = TextEditingController();
 
   MySearchDelegate({
     required this.medicineNames,
@@ -117,6 +141,7 @@ class MySearchDelegate extends SearchDelegate {
             close(context, null);
           } else {
             query = '';
+            searchController.clear();
           }
         },
       ),
@@ -133,11 +158,19 @@ class MySearchDelegate extends SearchDelegate {
 
   @override
   Widget buildLeading(BuildContext context) {
-    return IconButton(
-      icon: const Icon(Icons.arrow_back),
-      onPressed: () {
-        close(context, null);
-      },
+    return TextField(
+      controller: searchController,
+      autofocus: true,
+      decoration: InputDecoration(
+        hintText: 'Search',
+        border: InputBorder.none,
+        prefixIcon: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            close(context, null);
+          },
+        ),
+      ),
     );
   }
 
@@ -146,6 +179,7 @@ class MySearchDelegate extends SearchDelegate {
     List<String> results = (searchByName ? medicineNames : medicineCategories)!
         .where((item) => item.toLowerCase().contains(query.toLowerCase()))
         .toList();
+    query = searchController.text;
     return ListView.builder(
       itemCount: results.length,
       itemBuilder: (context, index) {
@@ -184,6 +218,7 @@ class MySearchDelegate extends SearchDelegate {
           title: Text(suggestion),
           onTap: () {
             query = suggestion;
+            searchController.text = suggestion;
             showResults(context);
           },
         );
@@ -199,11 +234,11 @@ class MyDrawerList extends StatelessWidget {
       padding: EdgeInsets.only(top: 15),
       child: Column(
         children: [
-          menuItem("Notifications", () {
+          menuItem("Favorites Page", () {
             // Navigate to Notifications page
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => NotificationsPage()),
+              MaterialPageRoute(builder: (context) => FavoritesPage()),
             );
           }),
           menuItem("Ordered Items", () {

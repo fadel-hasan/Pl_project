@@ -11,8 +11,11 @@ import 'package:frontend/my_drawer_header.dart';
 
 void main() {
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => OrderProvider(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => FavoritesProvider()),
+        ChangeNotifierProvider(create: (_) => OrderProvider()),
+      ],
       child: PharmacyApp(),
     ),
   );

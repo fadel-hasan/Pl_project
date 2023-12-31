@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class MedicineItem extends StatelessWidget {
+  final int index;
   final String imagePath;
   final String medicineName;
   final String sientificName;
@@ -10,10 +11,8 @@ class MedicineItem extends StatelessWidget {
   final String price;
   String medicineCategories;
 
-  final VoidCallback? onPressed;
-  final String text;
-
   MedicineItem({
+    required this.index,
     required this.imagePath,
     required this.medicineName,
     required this.sientificName,
@@ -22,8 +21,6 @@ class MedicineItem extends StatelessWidget {
     required this.quantity,
     required this.expirationDate,
     required this.price,
-    required this.onPressed,
-    required this.text,
   });
 
   @override
@@ -58,17 +55,6 @@ class MedicineItem extends StatelessWidget {
                 height: 100,
               )
             ],
-          ),
-        ),
-        ElevatedButton(
-          onPressed: onPressed,
-          child: Text(text),
-          style: ElevatedButton.styleFrom(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(0),
-            ),
-            backgroundColor: Color(0xff1DC2D6),
-            maximumSize: Size(150, 60),
           ),
         ),
       ],

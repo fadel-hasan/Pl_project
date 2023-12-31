@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/order_provider.dart';
-import 'package:frontend/pages/FavoritesPage.dart';
-import 'package:frontend/pages/listSearchByCategoryPage.dart';
-import 'package:frontend/pages/logout_page.dart';
-import 'package:frontend/pages/OrderedItemsPage.dart';
-import 'package:frontend/pages/medicine_details_page.dart';
-import 'package:frontend/my_drawer_header.dart';
-import 'package:provider/provider.dart';
+import 'package:project/pages/listSearchByCategoryPage.dart';
+import 'package:project/pages/logout_page.dart';
+
+import 'package:project/pages/medicine_details_page.dart';
+
+import 'package:project/my_drawer_header.dart';
+import 'package:project/pages/notificationPage.dart';
+import 'package:project/pages/ordersListPage.dart';
+import 'package:project/pages/webadd_medican.dart';
 
 class MedicineListPage extends StatelessWidget {
   final List<String> medicineNames = [
@@ -46,13 +47,14 @@ class MedicineListPage extends StatelessWidget {
     '4/4/2025'
   ];
   void _navigateToMedicineDetailsPage(
-      BuildContext context,
-      String medicineName,
-      String medicineCategory,
-      String imagePath,
-      String scientificName,
-      String manufactureCompany,
-      String expirationDate) {
+    BuildContext context,
+    String medicineName,
+    String imagePath,
+    String scientificName,
+    String medicineCategory,
+    String manufactureCompany,
+    String expirationDate,
+  ) {
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -76,7 +78,7 @@ class MedicineListPage extends StatelessWidget {
       backgroundColor: Color.fromARGB(255, 227, 247, 247),
       appBar: AppBar(
         backgroundColor: Color(0xff17A4A1),
-        title: Text('ِAvailable Medecine'),
+        title: Text('Available Medecine'),
         actions: [
           IconButton(
             onPressed: () {
@@ -100,34 +102,14 @@ class MedicineListPage extends StatelessWidget {
               ),
               title: Text(medicineNames[index]),
               subtitle: Text(medicineCategories[index]),
-              trailing: IconButton(
-                icon: Icon(
-                  Provider.of<FavoritesProvider>(context)
-                          .favoriteMedicines
-                          .contains(medicineNames[index])
-                      ? Icons.favorite
-                      : Icons.favorite_border,
-                  color: Colors.red,
-                ),
-                onPressed: () {
-                  var favoritesProvider =
-                      Provider.of<FavoritesProvider>(context, listen: false);
-
-                  if (favoritesProvider.favoriteMedicines
-                      .contains(medicineNames[index])) {
-                    favoritesProvider.removeFromFavorites(medicineNames[index]);
-                  } else {
-                    favoritesProvider.addToFavorites(medicineNames[index]);
-                  }
-                },
-              ),
+              trailing: const Icon(Icons.arrow_forward),
               onTap: () {
                 _navigateToMedicineDetailsPage(
                     context,
                     medicineNames[index],
-                    medicineCategories[index],
                     medicineImages[index],
                     sientificNames[index],
+                    medicineCategories[index],
                     manufactureCompanies[index],
                     expirationDates[index]);
               },
@@ -146,6 +128,16 @@ class MedicineListPage extends StatelessWidget {
             ),
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AddMedicinePage()),
+          );
+        },
+        child: Icon(Icons.add),
+        backgroundColor: Color(0xff17A4A1),
       ),
     );
   }
@@ -355,14 +347,7 @@ class MyDrawerList extends StatelessWidget {
       padding: EdgeInsets.only(top: 15),
       child: Column(
         children: [
-          menuItem("Favorites Page", Icons.favorite, () {
-            // Navigate to Favorites page
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => FavoritesPage()),
-            );
-          }),
-          menuItem("Ordered Items", Icons.local_hospital, () {
+          menuItem("Orders List", Icons.local_hospital, () {
             // Navigate to Notifications page
             Navigator.push(
               context,

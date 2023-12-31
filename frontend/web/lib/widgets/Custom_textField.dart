@@ -8,7 +8,13 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
+      validator: (value) {
+        if (value!.length < 8) {
+          return "* Input should be atleast 8 characters";
+        } else
+          return null;
+      },
       decoration: InputDecoration(
         hintText: hintText,
         hintStyle: TextStyle(

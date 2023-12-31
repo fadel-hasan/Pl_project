@@ -51,115 +51,96 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Add Medicine')),
+      backgroundColor: Color.fromARGB(255, 227, 247, 247),
+      appBar: AppBar(
+          backgroundColor: Color(0xff17A4A1), title: Text('Add Medicine')),
       body: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
         child: Form(
           key: _formKey,
           child: Column(
             children: <Widget>[
-              TextFormField(
+              _buildTextFormField(
                 controller: scientificNameController,
-                decoration: InputDecoration(
-                  labelText: 'Scientific Name',
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter the scientific name';
-                  }
-                  return null;
-                },
+                label: 'Scientific Name',
               ),
               SizedBox(height: 15),
-              TextFormField(
+              _buildTextFormField(
                 controller: commercialNameController,
-                decoration: InputDecoration(
-                  labelText: 'Commercial Name',
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter the commercial name';
-                  }
-                  return null;
-                },
+                label: 'Commercial Name',
               ),
               SizedBox(height: 15),
-              TextFormField(
+              _buildTextFormField(
                 controller: categoryController,
-                decoration: InputDecoration(
-                  labelText: 'Category',
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter the category';
-                  }
-                  return null;
-                },
+                label: 'Category',
               ),
               SizedBox(height: 15),
-              TextFormField(
+              _buildTextFormField(
                 controller: manufacturerController,
-                decoration: InputDecoration(
-                  labelText: 'Manufacture Company',
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter the manufacture company';
-                  }
-                  return null;
-                },
+                label: 'Manufacture Company',
               ),
               SizedBox(height: 15),
-              TextFormField(
+              _buildTextFormField(
                 controller: quantityController,
-                decoration: InputDecoration(
-                  labelText: 'Quantity Available',
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter the quantity available';
-                  }
-                  return null;
-                },
+                label: 'Quantity Available',
               ),
               SizedBox(height: 15),
-              TextFormField(
+              _buildTextFormField(
                 controller: expiryDateController,
-                decoration: InputDecoration(
-                  labelText: 'Expiration Date',
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter the expiration date';
-                  }
-                  return null;
-                },
+                label: 'Expiration Date',
               ),
               SizedBox(height: 15),
-              TextFormField(
+              _buildTextFormField(
                 controller: priceController,
-                decoration: InputDecoration(
-                  labelText: 'Price',
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter the price';
-                  }
-                  return null;
-                },
+                label: 'Price',
               ),
               SizedBox(height: 15),
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     // Save the form and add the new medicine
+                    addMedicine();
                   }
                 },
-                child: Text('Add Medicine'),
+                style: ElevatedButton.styleFrom(
+                  primary: Color(
+                      0xff17A4A1), // Change this color to your desired color
+                ),
+                child: Text(
+                  'Add Medicine',
+                  style: TextStyle(color: Colors.black),
+                ),
               ),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildTextFormField({
+    required TextEditingController controller,
+    required String label,
+  }) {
+    return TextFormField(
+      controller: controller,
+      decoration: InputDecoration(
+        labelText: label,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: BorderSide(color: Colors.blue),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: BorderSide(color: Colors.blue, width: 2.0),
+        ),
+      ),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Please enter $label';
+        }
+        return null;
+      },
     );
   }
 }

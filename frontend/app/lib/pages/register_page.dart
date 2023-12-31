@@ -157,6 +157,13 @@ class RegisterPage extends StatelessWidget {
                     print("Not Validated");
                   }
                 },
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(80),
+                  ),
+                  backgroundColor: Color(0xff1DC2D6),
+                  maximumSize: Size(100, 40),
+                ),
                 child: Text('REGISTER'),
               ),
               SizedBox(

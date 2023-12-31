@@ -30,6 +30,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  provider: ^5.0.0
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -38,11 +39,14 @@ dependencies:
   http: ^1.1.2
 
 dev_dependencies:
-  flutter_test:
+  http: ^1.1.2
+  flutter:
     sdk: flutter
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
+  cupertino_icons: ^1.0.2
+  shared_preferences: ^2.2.2
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
@@ -63,6 +67,11 @@ flutter:
   assets:
     - assets/photo_2023-12-16_16-31-43.jpg
     - assets/istockphoto-1055083134-1024x1024.webp
+    - assets/photo_2023-12-26_12-21-33.jpg
+    - assets/photo_2023-12-26_12-21-44.jpg
+    - assets/photo_2023-12-26_12-21-49.jpg
+    - assets/photo_2023-12-26_12-21-37.jpg
+    - assets/photo_2023-12-29_17-37-32.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

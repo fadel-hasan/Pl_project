@@ -132,6 +132,13 @@ class _LoginPageState extends State<LoginPage> {
                       print("Not Validated");
                     }
                   },
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(80),
+                    ),
+                    backgroundColor: Color(0xff1DC2D6),
+                    maximumSize: Size(100, 40),
+                  ),
                   child: Text('Login')),
               SizedBox(
                 height: 10,

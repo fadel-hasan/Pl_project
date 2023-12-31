@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/order_provider.dart';
-import 'package:frontend/pages/medicine_details_page.dart';
 import 'package:provider/provider.dart';
 
 class OrderedItemsPage extends StatefulWidget {
@@ -45,6 +44,15 @@ class _OrderedItemsPageState extends State<OrderedItemsPage> {
                     Text('Quantity: ${orders[index].quantity}'),
                     SizedBox(width: 8),
                     Icon(statusIcon), // Display the status icon
+                    Icon(
+                      orders[index].isPaid
+                          ? Icons.check_circle
+                          : Icons
+                              .cancel, // Use check or cancel icon based on isPaid
+                      color: orders[index].isPaid
+                          ? Colors.green
+                          : Colors.red, // Use green for paid, red for not paid
+                    ),
                   ],
                 ),
               );
@@ -58,6 +66,12 @@ class Order {
   final String itemName;
   final int quantity;
   String status;
+  bool isPaid;
 
-  Order({required this.itemName, required this.quantity, required this.status});
+  Order({
+    required this.itemName,
+    required this.quantity,
+    required this.status,
+    required this.isPaid,
+  });
 }

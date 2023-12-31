@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:project/pages/login_page.dart';
-import 'package:project/pages/medicine_page.dart';
-import 'package:project/pages/wephome_page.dart';
 import 'package:project/my_drawer_header.dart';
+import 'package:project/pages/ordersListPage.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(PharmacyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) =>
+          OrderProvider(), // Create an instance of your provider
+      child: PharmacyApp(),
+    ),
+  );
 }
 
 class PharmacyApp extends StatelessWidget {
@@ -18,8 +24,8 @@ class PharmacyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: {
         'LoginPage': (context) => LoginPage(),
-        'Medicine': (context) => WepHomePage(),
         'MyDrawerHeader': (context) => MyHeaderDrawer(),
+        'OrderedItemsPage': (context) => OrderedItemsPage(),
       },
       initialRoute: 'LoginPage',
     );

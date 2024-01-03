@@ -28,7 +28,7 @@ class RegisterPage extends StatelessWidget {
     };
     try {
       var response = await http.post(
-        Uri.parse('http://192.168.1.104:8000/api/register'),
+        Uri.parse('http://192.168.84.46:8000/api/register'),
         headers: <String, String>{'Content-Type': 'application/json'},
         body: jsonEncode(requestBody),
       );

@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:frontend/cubit/cubit.dart';
+import 'package:frontend/cubit/states.dart';
 import 'package:frontend/order_provider.dart';
 import 'package:frontend/pages/FavoritesPage.dart';
+import 'package:frontend/pages/all_order/all_order.dart';
 import 'package:frontend/pages/listSearchByCategoryPage.dart';
 import 'package:frontend/pages/logout_page.dart';
 import 'package:frontend/pages/OrderedItemsPage.dart';
 import 'package:frontend/pages/medicine_details_page.dart';
 import 'package:frontend/my_drawer_header.dart';
+import 'package:frontend/pages/search/search_page.dart';
 import 'package:provider/provider.dart';
+
+import 'all_gruds_category/all_grud_category.dart';
 
 class MedicineListPage extends StatelessWidget {
   final List<String> medicineNames = [
@@ -45,6 +52,7 @@ class MedicineListPage extends StatelessWidget {
     '25/6/2024',
     '4/4/2025'
   ];
+
   void _navigateToMedicineDetailsPage(
       BuildContext context,
       String medicineName,
@@ -61,9 +69,11 @@ class MedicineListPage extends StatelessWidget {
           sientificName: scientificName,
           medicineCategory: medicineCategory,
           manufactureCompany: manufactureCompany,
-          quantity: '1', // You can replace with actual quantity value
+          quantity: '1',
+          // You can replace with actual quantity value
           expirationDate: expirationDate,
-          price: '10.0', // You can replace with actual price value
+          price: '10.0',
+          // You can replace with actual price value
           imagePath: imagePath,
         ),
       ),
@@ -72,82 +82,154 @@ class MedicineListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color.fromARGB(255, 227, 247, 247),
-      appBar: AppBar(
-        backgroundColor: Color(0xff17A4A1),
-        title: Text('ِAvailable Medecine'),
-        actions: [
-          IconButton(
-            onPressed: () {
-              showSearch(
-                context: context,
-                delegate: MySearchDelegate(),
-              );
-            },
-            icon: const Icon(Icons.search),
-          ),
-        ],
-      ),
-      body: ListView.builder(
-        itemCount: medicineNames.length,
-        itemBuilder: (context, index) {
-          return Card(
-            child: ListTile(
-              leading: CircleAvatar(
-                radius: 28,
-                backgroundImage: AssetImage(medicineImages[index]),
-              ),
-              title: Text(medicineNames[index]),
-              subtitle: Text(medicineCategories[index]),
-              trailing: IconButton(
-                icon: Icon(
-                  Provider.of<FavoritesProvider>(context)
-                          .favoriteMedicines
-                          .contains(medicineNames[index])
-                      ? Icons.favorite
-                      : Icons.favorite_border,
-                  color: Colors.red,
-                ),
-                onPressed: () {
-                  var favoritesProvider =
-                      Provider.of<FavoritesProvider>(context, listen: false);
-
-                  if (favoritesProvider.favoriteMedicines
-                      .contains(medicineNames[index])) {
-                    favoritesProvider.removeFromFavorites(medicineNames[index]);
-                  } else {
-                    favoritesProvider.addToFavorites(medicineNames[index]);
-                  }
-                },
-              ),
-              onTap: () {
-                _navigateToMedicineDetailsPage(
-                    context,
-                    medicineNames[index],
-                    medicineCategories[index],
-                    medicineImages[index],
-                    sientificNames[index],
-                    manufactureCompanies[index],
-                    expirationDates[index]);
+    return BlocBuilder<AppCubit, AppState>(builder: (context, state) {
+      var list = AppCubit.get(context).list;
+      var list2 = AppCubit.get(context).categoryList;
+      return Scaffold(
+        backgroundColor: Color.fromARGB(255, 227, 247, 247),
+        appBar: AppBar(
+          backgroundColor: Color(0xff17A4A1),
+          title: Text('ِAvailable Medecine'),
+          actions: [
+            IconButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => SearchPage()));
               },
+              icon: const Icon(Icons.search),
             ),
-          );
-        },
-      ),
-      drawer: Drawer(
-        child: SingleChildScrollView(
-          child: Container(
-            child: Column(
-              children: [
-                MyHeaderDrawer(),
-                MyDrawerList(),
-              ],
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AllOrder(),
+            ),
+            );
+          },
+          child: Icon(Icons.menu),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Column(
+            children: [
+              Container(
+                height: 80,
+                width: double.infinity,
+                color:  Color.fromARGB(255, 227, 247, 247),
+                child: ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) => InkWell(
+                    onTap: () {
+                      AppCubit.get(context).getGrudByCategory(list2[index].id);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AllGrudsCategory(
+                            name: list2[index].name,
+                          ),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      width: 90,
+                      height: 60,
+                      decoration: BoxDecoration(
+                          color:  Colors.blue,
+                          border: Border.all(color: Colors.black, width: 1.0),// border: Border.all(),
+                          borderRadius: BorderRadius.circular(12)),
+                      alignment: Alignment.center,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(list2[index].name),
+                      ),
+                    ),
+                  ),
+                  separatorBuilder: (context, index) => SizedBox(
+                    width: 60,
+                  ),
+                  itemCount: list2.length,
+                ),
+              ),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: list.length,
+                  itemBuilder: (context, index) {
+                    return InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MedicineDetailsPage(
+                              medicineName: list[index].name,
+                              sientificName: list[index].scName,
+                              medicineCategory: list[index].nameCategory,
+                              manufactureCompany: list[index].manName,
+                              quantity: list[index].quantity,
+                              expirationDate: list[index].date,
+                              price: list[index].price,
+                              imagePath: 'assets/photo_2023-12-26_12-21-33.jpg',
+                            ),
+                          ),
+                        );
+                      },
+                      child: Card(
+                        child: ListTile(
+                          leading: CircleAvatar(
+                            radius: 28,
+                            backgroundImage: AssetImage(
+                              'assets/photo_2023-12-26_12-21-33.jpg',
+                            ),
+                          ),
+                          title: Text(list[index].name),
+                          subtitle: Text(list[index].nameCategory),
+                          trailing: IconButton(
+                            icon: Icon(
+                              Icons.favorite,
+                              color: list[index].isfav == true
+                                  ? Colors.red
+                                  : Colors.white,
+                            ),
+                            onPressed: () {
+                              // var favoritesProvider =
+                              //     Provider.of<FavoritesProvider>(context,
+                              //         listen: false);
+                              //
+                              // if (favoritesProvider.favoriteMedicines
+                              //     .contains(medicineNames[index])) {
+                              //   favoritesProvider
+                              //       .removeFromFavorites(medicineNames[index]);
+                              // } else {
+                              //   favoritesProvider
+                              //       .addToFavorites(medicineNames[index]);
+                              // }
+                            },
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
+        drawer: Drawer(
+          child: SingleChildScrollView(
+            child: Container(
+              child: Column(
+                children: [
+                  MyHeaderDrawer(),
+                  MyDrawerList(),
+                ],
+              ),
             ),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 }
 
@@ -170,9 +252,11 @@ class MySearchDelegate extends SearchDelegate {
           sientificName: sientificNames[index],
           medicineCategory: medicineCategories[index],
           manufactureCompany: manufactureCompanies[index],
-          quantity: '1', // You can replace with actual quantity value
+          quantity: '1',
+          // You can replace with actual quantity value
           expirationDate: expirationDates[index],
-          price: '10.0', // You can replace with actual price value
+          price: '10.0',
+          // You can replace with actual price value
           imagePath: medicineImages[index],
         ),
       ),

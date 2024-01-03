@@ -67,7 +67,7 @@ class _MedicineDetailsPageState extends State<MedicineDetailsPage> {
                   buildText('Medicine Category:   ', widget.medicineCategory),
                   buildText(
                       'Manufacture Company:   ', widget.manufactureCompany),
-                  buildText('Quantity:   ', items.toString()),
+                  buildText('Quantity:   ',widget.quantity),
                   buildText('Expiration Date:   ', widget.expirationDate),
                   buildText('Price:   ', widget.price),
                   ElevatedButton(

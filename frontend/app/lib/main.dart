@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:frontend/cubit/cubit.dart';
 import 'package:frontend/order_provider.dart';
 import 'package:frontend/pages/OrderedItemsPage.dart';
 import 'package:frontend/pages/login_page.dart';
@@ -26,27 +28,30 @@ class PharmacyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => ThemeProvider(),
-      child: Consumer<ThemeProvider>(
-        builder: (context, themeProvider, child) {
-          return MaterialApp(
-            theme: themeProvider.isDarkModeEnabled
-                ? ThemeData.dark()
-                : ThemeData.light(),
-            debugShowCheckedModeBanner: false,
-            routes: {
-              'LoginPage': (context) => LoginPage(),
-              'RegisterPage': (context) => RegisterPage(),
-              'Medicine': (context) => MedicineListPage(),
-              'SettingsScreen': (context) => SettingsScreen(),
-              'MyDrawerHeader': (context) => MyHeaderDrawer(),
-              'log out': (context) => LogOut(),
-              'Ordered Items': (context) => OrderedItemsPage()
-            },
-            initialRoute: 'LoginPage',
-          );
-        },
+    return BlocProvider(
+      create: (context) => AppCubit()..getAllGrud()..getAllCategory()..getAllOrder(),
+      child: ChangeNotifierProvider(
+        create: (context) => ThemeProvider(),
+        child: Consumer<ThemeProvider>(
+          builder: (context, themeProvider, child) {
+            return MaterialApp(
+              theme: themeProvider.isDarkModeEnabled
+                  ? ThemeData.dark()
+                  : ThemeData.light(),
+              debugShowCheckedModeBanner: false,
+              routes: {
+                'LoginPage': (context) => LoginPage(),
+                'RegisterPage': (context) => RegisterPage(),
+                'Medicine': (context) => MedicineListPage(),
+                'SettingsScreen': (context) => SettingsScreen(),
+                'MyDrawerHeader': (context) => MyHeaderDrawer(),
+                'log out': (context) => LogOut(),
+                'Ordered Items': (context) => OrderedItemsPage()
+              },
+              initialRoute: 'LoginPage',
+            );
+          },
+        ),
       ),
     );
   }

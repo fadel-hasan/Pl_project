@@ -29,10 +29,9 @@ class _LoginPageState extends State<LoginPage> {
     try {
       String? regToken = await UserPreferences.getRegisterToken();
       var response = await http.post(
-        Uri.parse('http://192.168.1.104:8000/api/login'),
+        Uri.parse('http://192.168.84.46:8000/api/login'),
         headers: <String, String>{
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer $regToken'
         },
         body: jsonEncode(requestBody),
       );
@@ -109,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
                 height: 20,
               ),
               CustomTextField(
-                hintText: 'Email',
+                hintText: 'Phone Number',
                 controller: email,
                 obscureText: false,
               ),

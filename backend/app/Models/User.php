@@ -6,11 +6,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\passport\HasApiTokens;
-require_once __DIR__.'/../../vendor/laravel/passport/src/HasApiTokens.php';
+// use Laravel\passport\HasApiTokens;
+// require_once __DIR__.'/../../vendor/laravel/passport/src/HasApiTokens.php';
 class User extends Authenticatable
 {
-    use HasApiTokens,HasFactory;
+    use HasFactory;
 
     /**
      * The attributes that are mass assignable.
@@ -20,8 +20,8 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'password',
-        'role_id'
+        // 'phone',
+        'password'
     ];
 
     /**
@@ -45,9 +45,12 @@ class User extends Authenticatable
     ];
 
 
-    public function role(){
-        $this->belongsTo(Role::class);
+
+    public function preferredMedicines()
+    {
+        return $this->belongsToMany(Medicine::class, 'preferred_medicines');
     }
+
 }
 
 

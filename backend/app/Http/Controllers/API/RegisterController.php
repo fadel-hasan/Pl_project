@@ -21,9 +21,20 @@ class RegisterController extends BaseController
             {
                 $validator = Validator::make($request->all(), [
                     'name' => ['required','min:3','max:50','string'],
-                    'email' => ['required','email','unique:users'],
+                    'email' => ['required','numeric','unique:users'],
                     'password' => ['required','confirmed',Password::min(8)->mixedCase()->numbers()->symbols()],
-                ]);
+                ],
+            [
+                'name.required' => 'name field is required',
+                'name.min' => 'name field must be 3 character at latest',
+                'name.max' => 'name field must be 50 at most',
+                'name.string' => 'name must be string',
+                'email.required' => 'email field is required',
+                'email.email' => 'email is not regular email',
+                'email.unique' => 'email has been found in system',
+                'password.required' => 'password field is required',
+                'password.confirmed' => 'password not match'
+            ]);
 
                 if($validator->fails()){
                     return $this->sendError('Validation Error.', $validator->errors(),422);
@@ -53,7 +64,7 @@ class RegisterController extends BaseController
             public function login(Request $request)
             {
                 $validate = $request->validate([
-                    'email'=> ['email','required','exists:users'],
+                    'email'=> ['required','exists:users'],
                     'password'=>'required'
                 ]);
 
@@ -63,6 +74,14 @@ class RegisterController extends BaseController
                 }
 
                 if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
+                    if ($request->email == env("email_warehouse"))
+                    {
+                        $success['type'] = 'warehouse';
+                    }
+                    else
+                    {
+                        $success['type'] = 'pharmacy';
+                    }
                     $user = Auth::user();
                     $accessToken= $user->createToken('MyApp');
                     $success['token'] = $accessToken->accessToken;

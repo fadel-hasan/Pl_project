@@ -14,17 +14,15 @@ class RegisterPage extends StatelessWidget {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController ConfirmPasswordController =
       TextEditingController();
-  final TextEditingController rol_idController = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey();
 
   Future<void> register(BuildContext context, name, String email, String pass,
-      String passConfir, String rol_id) async {
+      String passConfir) async {
     Map<String, String> requestBody = {
       'name': name,
       'email': email,
       'password': pass,
       'password_confirmation': passConfir,
-      'role_id': rol_id
     };
     try {
       var response = await http.post(
@@ -111,7 +109,7 @@ class RegisterPage extends StatelessWidget {
                 height: 10,
               ),
               CustomTextField(
-                hintText: 'Email',
+                hintText: 'Phone Number',
                 controller: emailController,
                 obscureText: false,
               ),
@@ -132,14 +130,6 @@ class RegisterPage extends StatelessWidget {
                 obscureText: true,
               ),
               SizedBox(
-                height: 10,
-              ),
-              CustomTextField(
-                hintText: 'rol id',
-                controller: rol_idController,
-                obscureText: false,
-              ),
-              SizedBox(
                 height: 20,
               ),
               ElevatedButton(
@@ -151,8 +141,7 @@ class RegisterPage extends StatelessWidget {
                         nameController.text,
                         emailController.text,
                         passwordController.text,
-                        ConfirmPasswordController.text,
-                        rol_idController.text);
+                        ConfirmPasswordController.text);
                   } else {
                     print("Not Validated");
                   }

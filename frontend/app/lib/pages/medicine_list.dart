@@ -93,7 +93,8 @@ class MedicineListPage extends StatelessWidget {
           actions: [
             IconButton(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => SearchPage()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SearchPage()));
               },
               icon: const Icon(Icons.search),
             ),
@@ -105,19 +106,19 @@ class MedicineListPage extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) => AllOrder(),
-            ),
+              ),
             );
           },
           child: Icon(Icons.menu),
         ),
         body: Padding(
-          padding: const EdgeInsets.all(15.0),
+          padding: const EdgeInsets.all(40),
           child: Column(
             children: [
               Container(
-                height: 80,
-                width: double.infinity,
-                color:  Color.fromARGB(255, 227, 247, 247),
+                height: 60,
+                width: 60,
+                color: Color.fromARGB(255, 227, 247, 247),
                 child: ListView.separated(
                   scrollDirection: Axis.horizontal,
                   shrinkWrap: true,
@@ -137,8 +138,10 @@ class MedicineListPage extends StatelessWidget {
                       width: 90,
                       height: 60,
                       decoration: BoxDecoration(
-                          color:  Colors.blue,
-                          border: Border.all(color: Colors.black, width: 1.0),// border: Border.all(),
+                          color: Colors.blue,
+                          border: Border.all(
+                              color: Colors.black,
+                              width: 1.0), // border: Border.all(),
                           borderRadius: BorderRadius.circular(12)),
                       alignment: Alignment.center,
                       child: Padding(

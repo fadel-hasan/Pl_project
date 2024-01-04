@@ -126,7 +126,11 @@ class _LoginPageState extends State<LoginPage> {
               ElevatedButton(
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
-                      login(context, email.text, password.text);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MedicineListPage()),
+                      );
                     } else {
                       print("Not Validated");
                     }

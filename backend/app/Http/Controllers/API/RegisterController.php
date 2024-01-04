@@ -90,6 +90,7 @@ class RegisterController extends BaseController
                     if($request->remember_me)
                     {
                         $accessToken->token->expires_at = Carbon::now()->addMonth();
+                        $accessToken->token->save();
                     }
                     $accessToken->token->save;
                     $success['expire_at']=Carbon::parse($accessToken->token->expires_at)->toDateTimeString();
@@ -107,8 +108,43 @@ class RegisterController extends BaseController
             * @return \Illuminate\Http\Response
             */
             public function logout(){
-                $user = Auth::user()->token();
-                $user->revoke();
+                $accessToken = Auth::user()->token();
+                $accessToken->revoke();
                 return response()->json(["success"=>"logout success"],200);
+            }
+
+            /**
+             * Login by phone number api
+             *
+             * @return \Illuminate\Http\Response
+             */
+            public function loginByPhone(Request $request)
+            {
+                $validate = $request->validate([
+                    'phone' => ['required', 'exists:users'],
+                    'password' => 'required'
+                ]);
+
+                if (!$validate) {
+                    return $this->sendError('Validation Error.', $validate->errors(), 422);
+                }
+
+                if (Auth::attempt(['phone' => $request->phone, 'password' => $request->password])) {
+                    $user = Auth::user();
+                    $accessToken = $user->createToken('MyApp');
+                    $success['token'] = $accessToken->accessToken;
+                    $user['remember_token'] = $accessToken;
+                    $success['name'] = $user->name;
+
+                    if ($request->remember_me) {
+                        $accessToken->token->expires_at = Carbon::now()->addMonth();
+                        $accessToken->token->save();
+                    }
+
+                    $success['expire_at'] = Carbon::parse($accessToken->token->expires_at)->toDateTimeString();
+                    return $this->sendResponse($success, 'User logged in successfully.');
+                } else {
+                    return $this->sendError('Unauthorized.', ['error' => 'Unauthorized'], 403);
+                }
             }
 }

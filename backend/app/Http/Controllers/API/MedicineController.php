@@ -53,7 +53,7 @@ class MedicineController extends BaseController
     {
         $class = request('class');
         if (isset($class)) {
-            $medicines = Medicine::where('category_id', $class)->get();
+            $medicines = Medicine::with(['company', 'category'])->where('category_id', $class)->get();
         } else {
             // Get all the medicines from the database
             $medicines = Medicine::with(['company', 'category'])->get();

@@ -8,6 +8,8 @@ use App\Models\OrderDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Category;
+use App\Models\Company;
 use Illuminate\Support\Facades\Auth;
 
 class OrderController extends BaseController
@@ -55,6 +57,10 @@ class OrderController extends BaseController
         foreach ($orderDetails as $orderDetail) {
         $medicine = Medicine::find($orderDetail->medicine_id);
         $orderDetail->medicine_name = $medicine->name;
+        $company = Company::find($medicine->company_id);
+        $category = Category::find($medicine->category_id);
+        $orderDetail->company = $company;
+        $orderDetail->category = $category;
         }
         return $this->sendResponse($orderDetails,'ok');
         }

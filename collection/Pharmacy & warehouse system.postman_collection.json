@@ -307,6 +307,49 @@
 					"response": []
 				},
 				{
+					"name": "edit medicine",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"name\":\"drug1\",\n        \"scientific_name\":\"setamol\",\n        \"manufacturer_name\":\"pharm\",\n        \"category_id\":\"1\",\n        \"company_id\":\"1\",\n        \"quantity\":10,\n        \"price\":300.1,\n        \"expire_date\":\"2024/12/23\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/medicine/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"medicine",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "get all medicine with classfication",
 					"request": {
 						"auth": {

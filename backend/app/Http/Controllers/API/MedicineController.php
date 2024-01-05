@@ -46,6 +46,37 @@ class MedicineController extends BaseController
             }
         }
     }
+
+    public function update($id, Request $request)
+    {
+        // Validate the request data
+        $validate = $request->validate([
+            'name' => 'required|string',
+            'scientific_name' => 'required|string',
+            'manufacturer_name' => 'required|string',
+            'category_id' => 'required',
+            'company_id' => 'required',
+            'quantity' => 'required|integer',
+            'price' => 'required|numeric',
+            'expire_date' => 'required|date',
+        ]);
+
+        if (!$validate) {
+            return $this->sendError("Validation error.", $validate->errors(), 422);
+        } else {
+            $medicine = Medicine::find($id);
+            if (!$medicine) {
+                return $this->sendError('Error', 'Medicine not found', 404);
+            }
+
+            $input = $request->all();
+            $medicine->fill($input);
+            $medicine->save();
+
+            return $this->sendResponse($medicine, "Medicine updated successfully", 200);
+        }
+    }
+
     /**
      * @return \Illuminate\Http\Response
      */
@@ -81,9 +112,19 @@ class MedicineController extends BaseController
             return $this->sendError('No search term provided', [], 400);
         }
         if ($searchType === 'name') {
-            $results = Medicine::where('name', 'like', '%' . $query . '%')->get();
+            $results = Medicine::with(['company','category'])->where('name', 'like', '%' . $query . '%')->get();
         } else if ($searchType === 'category') {
-            $results = Category::where('name', 'like', '%' . $query . '%')->with('medicines')->get();
+            $id = Category::where('name', 'like', '%' . $query . '%')->first('id');
+            if($id)
+            {
+                $results = Medicine::with(['company','category'])
+                ->where('category_id','=',$id->id)
+                ->get();
+            }
+            else{
+                return $this->sendResponse([], 'no result found');
+
+            }
         } else {
             // Handle invalid search type
             return $this->sendError('Invalid search type', [], 400);
@@ -92,7 +133,7 @@ class MedicineController extends BaseController
         if ($results) {
             return $this->sendResponse($results, 'ok');
         }
-        return $this->sendError('Medicines not found', [], 404);
+        return $this->sendResponse([], 'Medicines not found');
     }
 
 

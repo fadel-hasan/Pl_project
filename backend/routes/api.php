@@ -25,6 +25,7 @@ Route::post('login', [RegisterController::class,'login']);
 Route::middleware('auth:api')->group(function(){
     Route::middleware('check')->group(function(){
         Route::post('medicine/create', [MedicineController::class, 'store']);
+        Route::put('medicine/{id}', [MedicineController::class,'update']);
         Route::post('category/create', [CategoryController::class, 'store']);
         Route::post('company/create', [CompanyController::class, 'store']);
     });
